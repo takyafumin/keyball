@@ -39,7 +39,6 @@ enum custom_keycodes {
 // --------------------
 // basic
 #define SPC      KC_SPC
-#define TAB      KC_TAB
 #define ESC      KC_ESC
 #define ENT      KC_ENT
 #define BS       KC_BSPC
@@ -48,7 +47,6 @@ enum custom_keycodes {
 #define EN       KC_LNG2
 
 // modifier
-#define CTLTAB   RCTL_T(TAB)
 #define S_SPC    LSFT_T(SPC)
 #define S_ENT    LSFT_T(ENT)
 #define S_BS     LSFT_T(BS)
@@ -69,15 +67,11 @@ enum custom_keycodes {
 #define SFTSLSH  LSFT_T(KC_SLSH)
 
 // Layer
-#define LEFT     MO(_LEFT)
-#define RIGHT    MO(_RIGHT)
-#define EXTRA    MO(_EXTRA)
-#define NUMS     MO(_NUMS)
-#define LT_EN    LT(LEFT, EN)
-#define RT_JP    LT(RIGHT, JP)
+#define LT_EN    LT(_LEFT, EN)
+#define RT_JP    LT(_RIGHT, JP)
 #define BALL     MO(_LBALL)
-#define EXT0     LT(EXTRA, KC_0)
-#define EXTTAB   LT(EXTRA, KC_TAB)
+#define EXT0     LT(_EXTRA, KC_0)
+#define EXTTAB   LT(_EXTRA, KC_TAB)
 
 // OSM/OSL
 #define OSM_SFT  OSM(MOD_LSFT)
@@ -88,19 +82,19 @@ enum custom_keycodes {
 // --------------------
 // custom keyterms
 // --------------------
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-
-    case ALT_D:
-    case ALT_K:
-    case GUI_S:
-    case GUI_L:
-      return TAPPING_TERM + 100;
-
-    default:
-      return TAPPING_TERM;
-  }
-}
+// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+//   switch (keycode) {
+//
+//     case ALT_D:
+//     case ALT_K:
+//     case GUI_S:
+//     case GUI_L:
+//       return TAPPING_TERM + 100;
+//
+//     default:
+//       return TAPPING_TERM;
+//   }
+// }
 
 // --------------------
 // keymap
@@ -164,89 +158,106 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // --------------------
 // クリック時イベント
 // --------------------
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Left Ctrlが押されているか
-    bool lctrl = keyboard_report->mods & MOD_BIT(KC_LCTL);
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     // Left Ctrlが押されているか
+//     bool lctrl = keyboard_report->mods & MOD_BIT(KC_LCTL);
+//
+//     switch (keycode) {
+//
+//         // Ctrl + j = Enter
+//         case SFT_J:
+//             if (record->event.pressed) {
+//                 if (lctrl) {
+//                     unregister_code(KC_LCTL);
+//                     tap_code(KC_ENT);
+//                     register_code(KC_LCTL);
+//                     return false;
+//                 }
+//             }
+//             break;
+//
+//         // Ctrl + h = Backspace
+//         case KC_H:
+//             if (record->event.pressed) {
+//                 if (lctrl) {
+//                     unregister_code(KC_LCTL);
+//                     tap_code(KC_BSPC);
+//                     register_code(KC_LCTL);
+//                     return false;
+//                 }
+//             }
+//             break;
+//
+//         // MAC_PRSC
+//         case MAC_PRSC:
+//             if (record->event.pressed) {
+//                 register_code(KC_LSFT);
+//                 register_code(KC_LGUI);
+//                 tap_code(KC_4);
+//                 unregister_code(KC_LGUI);
+//                 unregister_code(KC_LSFT);
+//             }
+//             return false;
+//             break;
+//
+//         case MY_SCRL:
+//           if (record->event.pressed) {
+//             keyball_set_scroll_mode(true);
+//           } else {
+//             keyball_set_scroll_mode(false);
+//           }
+//           return false;
+//           break;
+//     }
+//
+//     return true;
+// }
 
-    switch (keycode) {
+// --------------------
+// QUICK_TAP_TERM
+// --------------------
+// uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+//   switch (keycode) {
+//     case LT_EN:
+//     case RT_JP:
+//       // レイヤー切り替えの場合はQUICK_TAP_TERMを無効にする
+//       return 0;
+//     default:
+//       return QUICK_TAP_TERM;
+//   }
+// }
 
-        // Ctrl + j = Enter
-        case SFT_J:
-            if (record->event.pressed) {
-                if (lctrl) {
-                    unregister_code(KC_LCTL);
-                    tap_code(KC_ENT);
-                    register_code(KC_LCTL);
-                    return false;
-                }
-            }
-            break;
-
-        // Ctrl + h = Backspace
-        case KC_H:
-            if (record->event.pressed) {
-                if (lctrl) {
-                    unregister_code(KC_LCTL);
-                    tap_code(KC_BSPC);
-                    register_code(KC_LCTL);
-                    return false;
-                }
-            }
-            break;
-
-        // MAC_PRSC
-        case MAC_PRSC:
-            if (record->event.pressed) {
-                register_code(KC_LSFT);
-                register_code(KC_LGUI);
-                tap_code(KC_4);
-                unregister_code(KC_LGUI);
-                unregister_code(KC_LSFT);
-            }
-            return false;
-            break;
-
-        case MY_SCRL:
-          if (record->event.pressed) {
-            keyball_set_scroll_mode(true);
-          } else {
-            keyball_set_scroll_mode(false);
-          }
-          return false;
-          break;
-    }
-
-    return true;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  // 現在のレイヤーを変更前のレイヤーとして保持
-  previous_layer = current_layer;
-
-  // 現在のレイヤーを更新
-  current_layer = biton32(state);
-
-  switch (current_layer) {
-    case _BASE:
-      rgblight_sethsv(HSV_OFF);
-      break;
-    case _LEFT:
-      rgblight_sethsv(HSV_CYAN);
-      break;
-    case _RIGHT:
-      rgblight_sethsv(HSV_BLUE);
-      break;
-    case _EXTRA:
-      rgblight_sethsv(HSV_GREEN);
-      break;
-    case _NUMS:
-      rgblight_sethsv(HSV_GREEN);
-      break;
-    case _LBALL:
-      rgblight_sethsv(HSV_PURPLE);
-      break;
-  }
-
-  return state;
-}
+// --------------------
+// レイヤー切り替え時のRGB設定
+// --------------------
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//   // 現在のレイヤーを変更前のレイヤーとして保持
+//   previous_layer = current_layer;
+//
+//   // 現在のレイヤーを更新
+//   current_layer = biton32(state);
+//
+//   switch (current_layer) {
+//     case _BASE:
+//       rgblight_sethsv(HSV_OFF);
+//       break;
+//     case _LEFT:
+//       rgblight_sethsv(HSV_CYAN);
+//       break;
+//     case _RIGHT:
+//       rgblight_sethsv(HSV_BLUE);
+//       break;
+//     case _EXTRA:
+//       rgblight_sethsv(HSV_GREEN);
+//       break;
+//     case _NUMS:
+//       rgblight_sethsv(HSV_GREEN);
+//       break;
+//     case _LBALL:
+//       rgblight_sethsv(HSV_PURPLE);
+//       break;
+//   }
+//
+//   return state;
+// }
 
