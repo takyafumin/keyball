@@ -216,16 +216,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // --------------------
 // QUICK_TAP_TERM
 // --------------------
-// uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
-//   switch (keycode) {
-//     case LT_EN:
-//     case RT_JP:
-//       // レイヤー切り替えの場合はQUICK_TAP_TERMを無効にする
-//       return 0;
-//     default:
-//       return QUICK_TAP_TERM;
-//   }
-// }
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LT_EN:
+    case RT_JP:
+      // レイヤー切り替えの場合はQUICK_TAP_TERMを無効にする
+      return 0;
+    default:
+      return QUICK_TAP_TERM;
+  }
+}
 
 // --------------------
 // レイヤー切り替え時のRGB設定
