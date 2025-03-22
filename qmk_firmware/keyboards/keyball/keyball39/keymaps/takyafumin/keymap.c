@@ -158,60 +158,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // --------------------
 // クリック時イベント
 // --------------------
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//     // Left Ctrlが押されているか
-//     bool lctrl = keyboard_report->mods & MOD_BIT(KC_LCTL);
-//
-//     switch (keycode) {
-//
-//         // Ctrl + j = Enter
-//         case SFT_J:
-//             if (record->event.pressed) {
-//                 if (lctrl) {
-//                     unregister_code(KC_LCTL);
-//                     tap_code(KC_ENT);
-//                     register_code(KC_LCTL);
-//                     return false;
-//                 }
-//             }
-//             break;
-//
-//         // Ctrl + h = Backspace
-//         case KC_H:
-//             if (record->event.pressed) {
-//                 if (lctrl) {
-//                     unregister_code(KC_LCTL);
-//                     tap_code(KC_BSPC);
-//                     register_code(KC_LCTL);
-//                     return false;
-//                 }
-//             }
-//             break;
-//
-//         // MAC_PRSC
-//         case MAC_PRSC:
-//             if (record->event.pressed) {
-//                 register_code(KC_LSFT);
-//                 register_code(KC_LGUI);
-//                 tap_code(KC_4);
-//                 unregister_code(KC_LGUI);
-//                 unregister_code(KC_LSFT);
-//             }
-//             return false;
-//             break;
-//
-//         case MY_SCRL:
-//           if (record->event.pressed) {
-//             keyball_set_scroll_mode(true);
-//           } else {
-//             keyball_set_scroll_mode(false);
-//           }
-//           return false;
-//           break;
-//     }
-//
-//     return true;
-// }
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Left Ctrlが押されているか
+    bool lctrl = keyboard_report->mods & MOD_BIT(KC_LCTL);
+
+    switch (keycode) {
+
+        // Ctrl + j = Enter
+        case SFT_J:
+            if (record->event.pressed) {
+                if (lctrl) {
+                    unregister_code(KC_LCTL);
+                    tap_code(KC_ENT);
+                    register_code(KC_LCTL);
+                    return false;
+                }
+            }
+            break;
+
+        // Ctrl + h = Backspace
+        case KC_H:
+            if (record->event.pressed) {
+                if (lctrl) {
+                    unregister_code(KC_LCTL);
+                    tap_code(KC_BSPC);
+                    register_code(KC_LCTL);
+                    return false;
+                }
+            }
+            break;
+
+        // MAC_PRSC
+        case MAC_PRSC:
+            if (record->event.pressed) {
+                register_code(KC_LSFT);
+                register_code(KC_LGUI);
+                tap_code(KC_4);
+                unregister_code(KC_LGUI);
+                unregister_code(KC_LSFT);
+            }
+            return false;
+            break;
+
+        case MY_SCRL:
+          if (record->event.pressed) {
+            keyball_set_scroll_mode(true);
+          } else {
+            keyball_set_scroll_mode(false);
+          }
+          return false;
+          break;
+    }
+
+    return true;
+}
 
 // --------------------
 // QUICK_TAP_TERM
