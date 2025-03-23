@@ -26,7 +26,7 @@ enum keymap_layer {
     _LEFT  = 1,
     _RIGHT = 2,
     _EXTRA = 3,
-    _LBALL = 4,
+    _BALL  = 4,
 };
 
 enum custom_keycodes {
@@ -38,19 +38,13 @@ enum custom_keycodes {
 // キーのalias
 // --------------------
 // basic
-#define SPC      KC_SPC
-#define ESC      KC_ESC
-#define ENT      KC_ENT
-#define BS       KC_BSPC
 #define DEL      KC_DEL
-#define JP       KC_LNG1
-#define EN       KC_LNG2
 
 // modifier
-#define S_SPC    LSFT_T(SPC)
-#define S_ENT    LSFT_T(ENT)
-#define S_BS     LSFT_T(BS)
-#define GUIESC   LGUI_T(ESC)
+#define S_SPC    LSFT_T(KC_SPC)
+#define S_ENT    LSFT_T(KC_ENT)
+#define S_BS     LSFT_T(KC_BSPC)
+#define GUIESC   LGUI_T(KC_ESC)
 
 // home mod key left
 #define SFT_F    LSFT_T(KC_F)
@@ -67,9 +61,9 @@ enum custom_keycodes {
 #define SFTSLSH  LSFT_T(KC_SLSH)
 
 // Layer
-#define LT_EN    LT(_LEFT, EN)
-#define RT_JP    LT(_RIGHT, JP)
-#define BALL     MO(_LBALL)
+#define LT_EN    LT(_LEFT, KC_LNG2)
+#define RT_JP    LT(_RIGHT, KC_LNG1)
+#define BALL     MO(_BALL)
 #define EXT0     LT(_EXTRA, KC_0)
 #define EXTTAB   LT(_EXTRA, KC_TAB)
 
@@ -135,10 +129,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   , XXXXXXX  ,     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  XXXXXXX
   ),
 
-  [_LBALL] = LAYOUT_universal(
+  [_BALL] = LAYOUT_universal(
     //|---------------------------------------------------.                         ,------------------------------------------------------.
     RGB_TOG  , _______  , _______  , _______  ,  _______  ,                           _______  , SCRL_DVD , SCRL_DVI , _______  , _______  ,
-    KC_LCTL  , KC_BTN4  , KC_BTN2  , KC_BTN1  ,  KC_BTN5  ,                           KC_WH_R  , KC_WH_U  , KC_WH_D  , KC_WH_L  , KC_LCTL  ,
+    KC_LCTL  , KC_BTN4  , KC_BTN2  , KC_BTN1  ,  KC_BTN5  ,                           KC_WH_L  , KC_WH_D  , KC_WH_U  , KC_WH_R  , KC_LCTL  ,
     _______  , _______  , KC_BTN4  , KC_BTN5  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
     //|---------------------------------------------------.                         ,------------------------------------------------------.
     _______  , _______  , _______  , _______  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
@@ -164,18 +158,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
 
-        // Ctrl + j = Enter
-        case SFT_J:
-            if (record->event.pressed) {
-                if (lctrl) {
-                    unregister_code(KC_LCTL);
-                    tap_code(KC_ENT);
-                    register_code(KC_LCTL);
-                    return false;
-                }
-            }
-            break;
-
         // Ctrl + h = Backspace
         case KC_H:
             if (record->event.pressed) {
@@ -189,16 +171,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         // MAC_PRSC
-        case MAC_PRSC:
-            if (record->event.pressed) {
-                register_code(KC_LSFT);
-                register_code(KC_LGUI);
-                tap_code(KC_4);
-                unregister_code(KC_LGUI);
-                unregister_code(KC_LSFT);
-            }
-            return false;
-            break;
+        // case MAC_PRSC:
+        //     if (record->event.pressed) {
+        //         register_code(KC_LSFT);
+        //         register_code(KC_LGUI);
+        //         tap_code(KC_4);
+        //         unregister_code(KC_LGUI);
+        //         unregister_code(KC_LSFT);
+        //     }
+        //     return false;
+        //     break;
 
         case MY_SCRL:
           if (record->event.pressed) {
@@ -218,46 +200,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // --------------------
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case LT_EN:
-    case RT_JP:
-      // レイヤー切り替えの場合はQUICK_TAP_TERMを無効にする
+
+    case LT(_LEFT, KC_LNG2):
+    case LT(_RIGHT, KC_LNG1):
+    case S_SPC:
+    case S_ENT:
       return 0;
+
     default:
       return QUICK_TAP_TERM;
   }
 }
-
-// --------------------
-// レイヤー切り替え時のRGB設定
-// --------------------
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//   // 現在のレイヤーを変更前のレイヤーとして保持
-//   previous_layer = current_layer;
-//
-//   // 現在のレイヤーを更新
-//   current_layer = biton32(state);
-//
-//   switch (current_layer) {
-//     case _BASE:
-//       rgblight_sethsv(HSV_OFF);
-//       break;
-//     case _LEFT:
-//       rgblight_sethsv(HSV_CYAN);
-//       break;
-//     case _RIGHT:
-//       rgblight_sethsv(HSV_BLUE);
-//       break;
-//     case _EXTRA:
-//       rgblight_sethsv(HSV_GREEN);
-//       break;
-//     case _NUMS:
-//       rgblight_sethsv(HSV_GREEN);
-//       break;
-//     case _LBALL:
-//       rgblight_sethsv(HSV_PURPLE);
-//       break;
-//   }
-//
-//   return state;
-// }
-
