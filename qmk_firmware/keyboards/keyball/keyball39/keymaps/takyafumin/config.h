@@ -39,4 +39,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 1
 
 // Layer 数
+#define LAYER_STATE_16BIT
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5
+
+// LOCKING SUPPORT の有効化
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+#define NO_MUSIC_MODE
+
+
+#define QUICK_TAP_TERM 0
+#define TAPPING_TERM 150
