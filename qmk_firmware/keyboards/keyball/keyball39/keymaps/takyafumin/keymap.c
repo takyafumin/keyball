@@ -76,19 +76,19 @@ enum custom_keycodes {
 // --------------------
 // custom keyterms
 // --------------------
-// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-//   switch (keycode) {
-//
-//     case ALT_D:
-//     case ALT_K:
-//     case GUI_S:
-//     case GUI_L:
-//       return TAPPING_TERM + 100;
-//
-//     default:
-//       return TAPPING_TERM;
-//   }
-// }
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+
+    case ALT_D:
+    case ALT_K:
+    case GUI_S:
+    case GUI_L:
+      return TAPPING_TERM + 100;
+
+    default:
+      return TAPPING_TERM;
+  }
+}
 
 // --------------------
 // keymap
@@ -131,12 +131,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BALL] = LAYOUT_universal(
     //|---------------------------------------------------.                         ,------------------------------------------------------.
-    RGB_TOG  , _______  , _______  , _______  ,  _______  ,                           _______  , SCRL_DVD , SCRL_DVI , _______  , _______  ,
-    KC_LCTL  , KC_BTN4  , KC_BTN2  , KC_BTN1  ,  KC_BTN5  ,                           KC_WH_L  , KC_WH_D  , KC_WH_U  , KC_WH_R  , KC_LCTL  ,
-    _______  , _______  , KC_BTN4  , KC_BTN5  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
+    RGB_TOG  , _______  , _______  , _______  ,  _______  ,                           _______  , KC_WHLD  , KC_WHLU  , SCRL_DVD , SCRL_DVI ,
+    KC_LCTL  , KC_LGUI  , KC_RALT  , KC_LSFT  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
+    _______  , _______  , _______  , _______  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
     //|---------------------------------------------------.                         ,------------------------------------------------------.
     _______  , _______  , _______  , _______  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
   ),
+  //[_BALL] = LAYOUT_universal(
+  //  //|---------------------------------------------------.                         ,------------------------------------------------------.
+  //  RGB_TOG  , _______  , _______  , _______  ,  _______  ,                           _______  , SCRL_DVD , SCRL_DVI , _______  , _______  ,
+  //  KC_LCTL  , KC_BTN4  , KC_BTN2  , KC_BTN1  ,  KC_BTN5  ,                           KC_WH_L  , KC_WH_D  , KC_WH_U  , KC_WH_R  , KC_LCTL  ,
+  //  _______  , _______  , KC_BTN4  , KC_BTN5  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
+  //  //|---------------------------------------------------.                         ,------------------------------------------------------.
+  //  _______  , _______  , _______  , _______  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
+  //),
   //KC_CAPS  , XXXXXXX  , QK_RBT   , EE_CLR   , QK_BOOT   ,                           KC_PSCR  , KC_F11   , KC_F12   , XXXXXXX  ,  XXXXXXX  ,
   //[_EXTRA] = LAYOUT_universal(
   //  RGB_TOG  , AML_TO   , AML_I50  , AML_D50  , _______  ,                            _______  , _______  , SSNP_HOR , SSNP_VRT , SSNP_FRE ,
