@@ -48,8 +48,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_MUSIC_MODE
 
 
-#define QUICK_TAP_TERM 150
+#define QUICK_TAP_TERM 200
 #define QUICK_TAP_TERM_PER_KEY
-#define TAPPING_TERM 150
+#define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
