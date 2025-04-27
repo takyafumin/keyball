@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     CTL_A    , GUI_S    , ALT_D    , SFT_F    , KC_G     ,                            KC_H     , SFT_J    , ALT_K    , GUI_L    , CTLSCN   ,
     SFT_Z    , KC_X     , KC_C     , KC_V     , KC_B     ,                            KC_N     , KC_M     , KC_COMM  , KC_DOT   , SFTSLSH  ,
     //|---------------------------------------------------.                         ,------------------------------------------------------.
-    BALL     , XXXXXXX  , XXXXXXX  , GUIESC   , LT_EN    , S_SPC    ,      S_ENT    , RT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
+    BALL     , XXXXXXX  , MY_SCRL  , GUIESC   , LT_EN    , S_SPC    ,      S_ENT    , RT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
   ),
 
   [_LEFT] = LAYOUT_universal(
@@ -209,10 +209,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
 
-    case LT(_LEFT, KC_LNG2):
-    case LT(_RIGHT, KC_LNG1):
+    // case LT(_LEFT, KC_LNG2):
+    //   return 0;
+    // case LT(_RIGHT, KC_LNG1):
+    //   return 0;
     case S_SPC:
+      return 0;
     case S_ENT:
+      return 0;
+    case LT_EN:
+      return 0;
+    case RT_JP:
       return 0;
 
     default:
