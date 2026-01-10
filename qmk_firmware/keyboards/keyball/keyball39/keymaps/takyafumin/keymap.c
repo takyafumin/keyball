@@ -79,12 +79,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                            KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     ,
     MT_A     , MT_S     , MT_D     , MT_F     , KC_G     ,                            KC_H     , MT_J     , MT_K     , MT_L     , MT_MINS  ,
     MT_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                            KC_N     , KC_M     , KC_COMM  , KC_DOT   , MT_SLSH  ,
-    BALL     , MY_SCRL  , MY_SCRL  , GUIESC   , LT_EN    , S_SPC    ,      S_ENT    , LT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
+    BALL     , MY_SCRL  , MY_SCRL  , MT_ESC   , LT_EN    , S_SPC    ,      S_ENT    , LT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
   ),
 
   [_MARK] = LAYOUT_universal(
     KC_EXLM  , KC_AT    , KC_HASH  , KC_DLR   , KC_PERC   ,                           KC_CIRC  , KC_AMPR  , KC_ASTR  , KC_LPRN  ,  KC_RPRN  ,
-    KC_TAB   , _______  , _______  , KC_CLN   , KC_SCLN   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_UNDS  ,
+    KC_TAB   , _______  , _______  , KC_COLN  , KC_SCLN   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_UNDS  ,
     KC_PIPE  , KC_BSLS  , _______  , KC_TILD  , KC_GRV    ,                           KC_EQL   , KC_QUOT  , KC_LT    , KC_GT    ,  KC_QUES  ,
     _______  , _______  , _______  , _______  , _______   , _______  ,     S_BS     , EXTTAB   , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  DEL
   ),
