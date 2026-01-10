@@ -15,6 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <stdint.h>
+#include <stdbool.h>
 
 #include QMK_KEYBOARD_H
 
@@ -23,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // keymap layer number
 enum keymap_layer {
     _BASE  = 0,
-    _LEFT  = 1,
-    _RIGHT = 2,
+    _MARK  = 1,
+    _NUMS  = 2,
     _EXTRA = 3,
     _BALL  = 4,
 };
@@ -44,51 +46,28 @@ enum custom_keycodes {
 #define S_SPC    LSFT_T(KC_SPC)
 #define S_ENT    LSFT_T(KC_ENT)
 #define S_BS     LSFT_T(KC_BSPC)
-#define GUIESC   LGUI_T(KC_ESC)
+#define MT_ESC   LT(_NUMS, KC_ESC)
 
 // home mod key left
-#define SFT_F    LSFT_T(KC_F)
-#define ALT_D    RALT_T(KC_D)
-#define GUI_S    LGUI_T(KC_S)
-#define CTL_A    LCTL_T(KC_A)
-#define SFT_Z    LSFT_T(KC_Z)
+#define MT_F    LCTL_T(KC_F)
+#define MT_D    RALT_T(KC_D)
+#define MT_S    LGUI_T(KC_S)
+#define MT_A    LSFT_T(KC_A)
+#define MT_Z    LSFT_T(KC_Z)
 
 // home mod key right
-#define SFT_J    LSFT_T(KC_J)
-#define ALT_K    RALT_T(KC_K)
-#define GUI_L    LGUI_T(KC_L)
-#define CTLSCN   RCTL_T(KC_SCLN)
-#define SFTSLSH  LSFT_T(KC_SLSH)
+#define MT_J    LCTL_T(KC_J)
+#define MT_K    RALT_T(KC_K)
+#define MT_L    LGUI_T(KC_L)
+#define MT_MINS RSFT_T(KC_MINS)
+#define MT_SLSH LSFT_T(KC_SLSH)
 
 // Layer
-#define LT_EN    LT(_LEFT, KC_LNG2)
-#define RT_JP    LT(_RIGHT, KC_LNG1)
+#define LT_EN    LT(_MARK, KC_LNG2)
+#define LT_JP    LT(_NUMS, KC_LNG1)
 #define BALL     MO(_BALL)
 #define EXT0     LT(_EXTRA, KC_0)
 #define EXTTAB   LT(_EXTRA, KC_TAB)
-
-// OSM/OSL
-#define OSM_SFT  OSM(MOD_LSFT)
-#define OSM_CTL  OSM(MOD_LCTL)
-#define OSM_ALT  OSM(MOD_LALT)
-#define OSM_GUI  OSM(MOD_LGUI)
-
-// --------------------
-// custom keyterms
-// --------------------
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-
-    case ALT_D:
-    case ALT_K:
-    case GUI_S:
-    case GUI_L:
-      return TAPPING_TERM + 100;
-
-    default:
-      return TAPPING_TERM;
-  }
-}
 
 // --------------------
 // keymap
@@ -98,43 +77,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default
   [_BASE] = LAYOUT_universal(
     KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                            KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     ,
-    CTL_A    , GUI_S    , ALT_D    , SFT_F    , KC_G     ,                            KC_H     , SFT_J    , ALT_K    , GUI_L    , CTLSCN   ,
-    SFT_Z    , KC_X     , KC_C     , KC_V     , KC_B     ,                            KC_N     , KC_M     , KC_COMM  , KC_DOT   , SFTSLSH  ,
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
-    BALL     , XXXXXXX  , MY_SCRL  , GUIESC   , LT_EN    , S_SPC    ,      S_ENT    , RT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
+    MT_A     , MT_S     , MT_D     , MT_F     , KC_G     ,                            KC_H     , MT_J     , MT_K     , MT_L     , MT_MINS  ,
+    MT_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                            KC_N     , KC_M     , KC_COMM  , KC_DOT   , MT_SLSH  ,
+    BALL     , MY_SCRL  , MY_SCRL  , GUIESC   , LT_EN    , S_SPC    ,      S_ENT    , LT_JP    , XXXXXXX  , XXXXXXX  , XXXXXXX  , BALL
   ),
 
-  [_LEFT] = LAYOUT_universal(
-    KC_1     , KC_2     , KC_3     , KC_4     , KC_5      ,                           KC_6     , KC_7     , KC_8     , KC_9     ,  KC_0     ,
-    OSM_CTL  , OSM_GUI  , OSM_ALT  , OSM_SFT  , KC_BSLS   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_COLN  ,
-    KC_LSFT  , XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_PIPE   ,                           KC_EQL   , KC_MINS  , KC_LT    , KC_GT    ,  KC_QUES  ,
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
+  [_MARK] = LAYOUT_universal(
+    KC_EXLM  , KC_AT    , KC_HASH  , KC_DLR   , KC_PERC   ,                           KC_CIRC  , KC_AMPR  , KC_ASTR  , KC_LPRN  ,  KC_RPRN  ,
+    KC_TAB   , _______  , _______  , KC_CLN   , KC_SCLN   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_UNDS  ,
+    KC_PIPE  , KC_BSLS  , _______  , KC_TILD  , KC_GRV    ,                           KC_EQL   , KC_QUOT  , KC_LT    , KC_GT    ,  KC_QUES  ,
     _______  , _______  , _______  , _______  , _______   , _______  ,     S_BS     , EXTTAB   , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  DEL
   ),
 
-  [_RIGHT] = LAYOUT_universal(
+  [_NUMS] = LAYOUT_universal(
     KC_1     , KC_2     , KC_3     , KC_4     , KC_5      ,                           KC_6     , KC_7     , KC_8     , KC_9     ,  KC_0     ,
-    KC_GRV   , KC_QUOT  , KC_LBRC  , KC_RBRC  , KC_BSLS   ,                           XXXXXXX  , OSM_SFT  , OSM_ALT  , OSM_GUI  ,  OSM_CTL  ,
-    KC_TILD  , KC_DQT   , KC_LCBR  , KC_RCBR  , KC_PIPE   ,                           XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  KC_LSFT  ,
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
-    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , EXT0      , _______  ,     _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  XXXXXXX
+    XXXXXXX  , XXXXXXX  , KC_LBRC  , KC_RBRC  , XXXXXXX   ,                           XXXXXXX  , KC_4     , KC_5     , KC_6     ,  _______  ,
+    XXXXXXX  , XXXXXXX  , KC_LCBR  , KC_RCBR  , XXXXXXX   ,                           KC_EQL   , KC_1     , KC_2     , KC_3     ,  _______  ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , EXT0      , _______  ,     S_BS     , EXT0     , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  XXXXXXX
   ),
 
   [_EXTRA] = LAYOUT_universal(
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
     KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5     ,                           KC_F6    , KC_F7    , KC_F8    , KC_F9    ,  KC_F10   ,
-    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   ,                           KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   ,  KC_PSCR  ,
-    KC_CAPS  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   ,                           KC_PSCR  , KC_F11   , KC_F12   , XXXXXXX  ,  XXXXXXX  ,
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
+    KC_CAPS  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   ,                           KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   ,  XXXXXXX  ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   ,                           KC_PSCR  , KC_F11   , KC_F12   , XXXXXXX  ,  XXXXXXX  ,
     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX   , XXXXXXX  ,     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  XXXXXXX
   ),
 
   [_BALL] = LAYOUT_universal(
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
     RGB_TOG  , _______  , KC_WH_U  , KC_WH_D  ,  _______  ,                           _______  , KC_WH_D  , KC_WH_U  , SCRL_DVD , SCRL_DVI ,
-    KC_LCTL  , KC_LGUI  , KC_RALT  , KC_LSFT  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
+    KC_LSFT  , KC_LGUI  , KC_RALT  , KC_LCTL  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
     _______  , _______  , _______  , _______  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
-    //|---------------------------------------------------.                         ,------------------------------------------------------.
     _______  , _______  , _______  , _______  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
   ),
   //[_BALL] = LAYOUT_universal(
@@ -161,34 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // クリック時イベント
 // --------------------
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Left Ctrlが押されているか
-    bool lctrl = keyboard_report->mods & MOD_BIT(KC_LCTL);
-
     switch (keycode) {
-
-        // Ctrl + h = Backspace
-        case KC_H:
-            if (record->event.pressed) {
-                if (lctrl) {
-                    unregister_code(KC_LCTL);
-                    tap_code(KC_BSPC);
-                    register_code(KC_LCTL);
-                    return false;
-                }
-            }
-            break;
-
-        // MAC_PRSC
-        // case MAC_PRSC:
-        //     if (record->event.pressed) {
-        //         register_code(KC_LSFT);
-        //         register_code(KC_LGUI);
-        //         tap_code(KC_4);
-        //         unregister_code(KC_LGUI);
-        //         unregister_code(KC_LSFT);
-        //     }
-        //     return false;
-        //     break;
 
         case MY_SCRL:
           if (record->event.pressed) {
@@ -201,28 +146,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
-}
-
-// --------------------
-// QUICK_TAP_TERM
-// --------------------
-uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-
-    // case LT(_LEFT, KC_LNG2):
-    //   return 0;
-    // case LT(_RIGHT, KC_LNG1):
-    //   return 0;
-    case S_SPC:
-      return 0;
-    case S_ENT:
-      return 0;
-    case LT_EN:
-      return 0;
-    case RT_JP:
-      return 0;
-
-    default:
-      return QUICK_TAP_TERM;
-  }
 }
