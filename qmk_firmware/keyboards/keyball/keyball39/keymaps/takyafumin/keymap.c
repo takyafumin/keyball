@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RGB_TOG  , _______  , KC_WH_D  , KC_WH_U  ,  _______  ,                           _______  , KC_WH_U  , KC_WH_D  , SCRL_DVD , SCRL_DVI ,
     KC_LCTL  , KC_LGUI  , KC_RALT  , KC_LSFT  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
     _______  , _______  , SCRL_DVI , SCRL_DVD ,  _______  ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
-    _______  , _______  , _______  , SCRL_MO  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
+    _______  , _______  , _______  , _______  ,  SCRL_MO  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
   ),
   //[_BALL] = LAYOUT_universal(
   //  //|---------------------------------------------------.                         ,------------------------------------------------------.
