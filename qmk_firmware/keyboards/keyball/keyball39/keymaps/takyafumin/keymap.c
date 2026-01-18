@@ -49,17 +49,17 @@ enum custom_keycodes {
 #define MT_ESC   LT(_NUMS, KC_ESC)
 
 // home mod key left
-#define MT_F    LCTL_T(KC_F)
+#define MT_F    LSFT_T(KC_F)
 #define MT_D    RALT_T(KC_D)
 #define MT_S    LGUI_T(KC_S)
-#define MT_A    LSFT_T(KC_A)
+#define MT_A    LCTL_T(KC_A)
 #define MT_Z    LSFT_T(KC_Z)
 
 // home mod key right
-#define MT_J    LCTL_T(KC_J)
+#define MT_J    RSFT_T(KC_J)
 #define MT_K    RALT_T(KC_K)
-#define MT_L    LGUI_T(KC_L)
-#define MT_MINS RSFT_T(KC_MINS)
+#define MT_L    RGUI_T(KC_L)
+#define MT_MINS RCTL_T(KC_MINS)
 #define MT_SLSH LSFT_T(KC_SLSH)
 
 // Layer
@@ -84,8 +84,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MARK] = LAYOUT_universal(
     KC_EXLM  , KC_AT    , KC_HASH  , KC_DLR   , KC_PERC   ,                           KC_CIRC  , KC_AMPR  , KC_ASTR  , KC_LPRN  ,  KC_RPRN  ,
-    KC_TAB   , _______  , _______  , KC_COLN  , KC_SCLN   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_UNDS  ,
-    KC_PIPE  , KC_BSLS  , _______  , KC_TILD  , KC_GRV    ,                           KC_EQL   , KC_QUOT  , KC_LT    , KC_GT    ,  KC_QUES  ,
+    KC_TAB   , _______  , KC_PIPE  , KC_COLN  , KC_SCLN   ,                           KC_LEFT  , KC_DOWN  , KC_UP    , KC_RIGHT ,  KC_UNDS  ,
+    _______  , _______  , KC_BSLS  , KC_TILD  , KC_GRV    ,                           KC_EQL   , KC_QUOT  , KC_LT    , KC_GT    ,  KC_QUES  ,
     _______  , _______  , _______  , _______  , _______   , _______  ,     S_BS     , EXTTAB   , XXXXXXX  , XXXXXXX  , XXXXXXX  ,  DEL
   ),
 
@@ -104,10 +104,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_BALL] = LAYOUT_universal(
-    RGB_TOG  , _______  , KC_WH_U  , KC_WH_D  ,  _______  ,                           _______  , KC_WH_D  , KC_WH_U  , SCRL_DVD , SCRL_DVI ,
-    KC_LSFT  , KC_LGUI  , KC_RALT  , KC_LCTL  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
-    _______  , _______  , _______  , _______  ,  SCRL_DVD ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
-    _______  , _______  , _______  , _______  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
+    RGB_TOG  , _______  , KC_WH_D  , KC_WH_U  ,  _______  ,                           _______  , KC_WH_U  , KC_WH_D  , SCRL_DVD , SCRL_DVI ,
+    KC_LCTL  , KC_LGUI  , KC_RALT  , KC_LSFT  ,  _______  ,                           KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN5  , KC_LCTL  ,
+    _______  , _______  , SCRL_DVI , SCRL_DVD ,  _______  ,                           CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE ,
+    _______  , _______  , _______  , SCRL_MO  ,  MY_SCRL  , _______  ,     _______  , _______  , _______  , _______  , _______  ,  _______
   ),
   //[_BALL] = LAYOUT_universal(
   //  //|---------------------------------------------------.                         ,------------------------------------------------------.
